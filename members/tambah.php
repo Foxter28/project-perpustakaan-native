@@ -1,37 +1,36 @@
 <?php
 require '../config/database.php';
+require '../layout/header.php';
 
-if (isset($_POST['simpan'])) {
+if(isset($_POST['simpan'])){
+    $nama = $_POST['nama'];
+    $kelas = $_POST['kelas'];
+    $no_hp = $_POST['no_hp'];
+
     mysqli_query($conn, "
-        INSERT INTO members VALUES (
-            NULL,
-            '$_POST[nama]',
-            '$_POST[kelas]',
-            '$_POST[no_hp]'
-        )
+        INSERT INTO members (nama_member, kelas, no_hp) 
+        VALUES ('$nama','$kelas','$no_hp')
     ");
     header("Location: index.php");
+    exit;
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tambah Anggota</title>
-</head>
-<body>
-
+<div class="container">
 <h2>Tambah Anggota</h2>
-
 <form method="POST">
-<input type="text" name="nama" placeholder="Nama" required><br><br>
-<input type="text" name="kelas" placeholder="Kelas"><br><br>
-<input type="text" name="no_hp" placeholder="No HP"><br><br>
-
-<button type="submit" name="simpan">Simpan</button>
+    <div class="mb-3">
+        <input type="text" name="nama" class="form-control" placeholder="Nama Anggota" required>
+    </div>
+    <div class="mb-3">
+        <input type="text" name="kelas" class="form-control" placeholder="Kelas">
+    </div>
+    <div class="mb-3">
+        <input type="text" name="no_hp" class="form-control" placeholder="No HP">
+    </div>
+    <button class="btn btn-primary" name="simpan">Simpan</button>
+    <a href="index.php" class="btn btn-secondary">Kembali</a>
 </form>
+</div>
 
-<a href="index.php">Kembali</a>
-
-</body>
-</html>
+<?php require '../layout/footer.php'; ?>

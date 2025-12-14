@@ -1,53 +1,67 @@
 <?php
 require '../config/database.php';
-$id = $_GET['id'];
+require '../layout/header.php';
 
+$id = intval($_GET['id']); // pastikan ID aman
 $buku = mysqli_query($conn, "SELECT * FROM books WHERE id=$id");
 $row = mysqli_fetch_assoc($buku);
 
 $kategori = mysqli_query($conn, "SELECT * FROM categories");
 
-if (isset($_POST['update'])) {
+if(isset($_POST['update'])){
+    $kategori_id = $_POST['kategori_id'];
+    $judul = $_POST['judul'];
+    $penulis = $_POST['penulis'];
+    $tahun = $_POST['tahun_terbit'];
+    $stok = $_POST['stok'];
+
     mysqli_query($conn, "
         UPDATE books SET
-        category_id='$_POST[category_id]',
-        judul='$_POST[judul]',
-        penulis='$_POST[penulis]',
-        tahun_terbit='$_POST[tahun_terbit]',
-        stok='$_POST[stok]'
+        kategori_id='$kategori_id',
+        judul='$judul',
+        penulis='$penulis',
+        tahun_terbit='$tahun',
+        stok='$stok'
         WHERE id=$id
     ");
     header("Location: index.php");
+    exit;
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Buku</title>
-</head>
-<body>
-
+<div class="container">
 <h2>Edit Buku</h2>
-
 <form method="POST">
-<select name="category_id">
-<?php while($k=mysqli_fetch_assoc($kategori)){ ?>
-<option value="<?= $k['id'] ?>" <?= $row['category_id']==$k['id']?'selected':'' ?>>
-    <?= $k['nama_kategori'] ?>
-</option>
-<?php } ?>
-</select><br><br>
+    <div class="mb-3">
+        <label>Kategori</label>
+        <select name="kategori_id" class="form-control" required>
+            <?php while($k = mysqli_fetch_assoc($kategori)){ ?>
+            <option value="<?= $k['id'] ?>" <?= $row['kategori_id']==$k['id']?'selected':'' ?>>
+                <?= htmlspecialchars($k['nama_kategori']) ?>
+            </option>
+            <?php } ?>
+        </select>
+    </div>
 
-<input type="text" name="judul" value="<?= $row['judul'] ?>"><br><br>
-<input type="text" name="penulis" value="<?= $row['penulis'] ?>"><br><br>
-<input type="number" name="tahun_terbit" value="<?= $row['tahun_terbit'] ?>"><br><br>
-<input type="number" name="stok" value="<?= $row['stok'] ?>"><br><br>
+    <div class="mb-3">
+        <input type="text" name="judul" class="form-control" value="<?= htmlspecialchars($row['judul']) ?>" placeholder="Judul Buku" required>
+    </div>
 
-<button type="submit" name="update">Update</button>
+    <div class="mb-3">
+        <input type="text" name="penulis" class="form-control" value="<?= htmlspecialchars($row['penulis']) ?>" placeholder="Penulis">
+    </div>
+
+    <div class="mb-3">
+        <input type="number" name="tahun_terbit" class="form-control" value="<?= htmlspecialchars($row['tahun_terbit']) ?>" placeholder="Tahun Terbit">
+    </div>
+
+    <div class="mb-3">
+        <input type="number" name="stok" class="form-control" value="<?= htmlspecialchars($row['stok']) ?>" placeholder="Stok">
+    </div>
+
+    <button class="btn btn-primary" name="update">Update</button>
+    <a href="index.php" class="btn btn-secondary">Kembali</a>
 </form>
+</div>
 
-<a href="index.php">Kembali</a>
-
-</body>
-</html>
+<?php require '../layout/footer.php'; ?>

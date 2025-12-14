@@ -1,48 +1,48 @@
 <?php
 require '../config/database.php';
-$kategori = mysqli_query($conn, "SELECT * FROM categories");
+require '../layout/header.php';
 
-if (isset($_POST['simpan'])) {
-    mysqli_query($conn, "
-        INSERT INTO books VALUES (
-            NULL,
-            '$_POST[category_id]',
-            '$_POST[judul]',
-            '$_POST[penulis]',
-            '$_POST[tahun_terbit]',
-            '$_POST[stok]'
-        )
-    ");
+$kategori = mysqli_query($conn, "SELECT * FROM categories");
+$members = mysqli_query($conn, "SELECT * FROM members");
+
+if(isset($_POST['simpan'])){
+    $judul = $_POST['judul'];
+    $penulis = $_POST['penulis'];
+    $tahun = $_POST['tahun'];
+    $stok = $_POST['stok'];
+    $kategori_id = $_POST['kategori_id'];
+    $peminjam_id = $_POST['peminjam_id'] ?: NULL;
+
+    mysqli_query($conn, "INSERT INTO books (judul, penulis, tahun_terbit, stok, kategori_id, peminjam_id) 
+                         VALUES ('$judul','$penulis','$tahun','$stok','$kategori_id','$peminjam_id')");
     header("Location: index.php");
+    exit;
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Tambah Buku</title>
-</head>
-<body>
-
+<div class="container">
 <h2>Tambah Buku</h2>
-
 <form method="POST">
-    <select name="category_id" required>
-        <option value="">-- Pilih Kategori --</option>
-        <?php while($k=mysqli_fetch_assoc($kategori)){ ?>
+    <div class="mb-3"><input type="text" name="judul" class="form-control" placeholder="Judul Buku" required></div>
+    <div class="mb-3"><input type="text" name="penulis" class="form-control" placeholder="Penulis"></div>
+    <div class="mb-3"><input type="number" name="tahun" class="form-control" placeholder="Tahun Terbit"></div>
+    <div class="mb-3"><input type="number" name="stok" class="form-control" placeholder="Stok" value="0"></div>
+    <div class="mb-3">
+        <select name="kategori_id" class="form-control" required>
+            <option value="">-- Pilih Kategori --</option>
+            <?php while($k = mysqli_fetch_assoc($kategori)){ ?>
             <option value="<?= $k['id'] ?>"><?= $k['nama_kategori'] ?></option>
-        <?php } ?>
-    </select><br><br>
-
-    <input type="text" name="judul" placeholder="Judul" required><br><br>
-    <input type="text" name="penulis" placeholder="Penulis" required><br><br>
-    <input type="number" name="tahun_terbit" placeholder="Tahun" required><br><br>
-    <input type="number" name="stok" placeholder="Stok" required><br><br>
-
-    <button type="submit" name="simpan">Simpan</button>
+            <?php } ?>
+        </select>
+    </div>
+    <div class="mb-3">
+        <select name="peminjam_id" class="form-control">
+            <option value="">-- Pilih Peminjam (Opsional) --</option>
+            <?php while($m = mysqli_fetch_assoc($members)){ ?>
+            <option value="<?= $m['id'] ?>"><?= $m['nama_member'] ?></option>
+            <?php } ?>
+        </select>
+    </div>
+    <button class="btn btn-primary" name="simpan">Simpan</button>
 </form>
-
-<a href="index.php">Kembali</a>
-
-</body>
-</html>
+</div>
+<?php require '../layout/footer.php'; ?>

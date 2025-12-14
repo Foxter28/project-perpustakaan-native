@@ -21,7 +21,7 @@ $data = mysqli_query($conn, "SELECT * FROM members");
 <?php $no=1; while($row=mysqli_fetch_assoc($data)){ ?>
 <tr>
     <td><?= $no++ ?></td>
-    <td><?= $row['nama'] ?></td>
+    <td><?= htmlspecialchars($row['nama_member']) ?></td>
     <td><?= $row['kelas'] ?></td>
     <td><?= $row['no_hp'] ?></td>
     <td>

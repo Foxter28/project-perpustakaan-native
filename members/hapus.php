@@ -1,5 +1,10 @@
 <?php
 require '../config/database.php';
-$id = $_GET['id'];
-mysqli_query($conn, "DELETE FROM members WHERE id=$id");
+
+if(isset($_GET['id'])){
+    $id = intval($_GET['id']); // pastikan ID aman
+    mysqli_query($conn, "DELETE FROM members WHERE id=$id");
+}
+
 header("Location: index.php");
+exit;
