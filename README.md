@@ -15,14 +15,14 @@ Berikut screenshot tampilan sistem:
 2. **Members (Anggota)**
    - Tambah, Edit, Hapus anggota.  
    - Menyimpan Nama, Kelas, dan No HP.  
-   ![Screenshot Members](https://cdn.discordapp.com/attachments/1217788659160580108/1449580497041883219/image.png?ex=693f6a8a&is=693e190a&hm=019cf9497980b899a2c6fbf5a1c571f211ee02a40798acee291404dd93ea5dbe&)
+   ![Screenshot Members](https://files.catbox.moe/7usg06.png)
 3. **Categories (Kategori)**
    - Tambah, Edit, Hapus kategori buku.  
-   ![Screenshot Categories](https://cdn.discordapp.com/attachments/1217788659160580108/1449580578650325102/image.png?ex=693f6a9d&is=693e191d&hm=b180cbc4850b2bdb80734e06aed651e5a64c8bc98807770cdc4eab7562b1b9e1&)
+   ![Screenshot Categories](https://files.catbox.moe/vvhvab.png)
 4. **Books (Buku)**
    - Tambah, Edit, Hapus buku.  
    - Set kategori dan peminjam buku.  
-   ![Screenshot Books](https://cdn.discordapp.com/attachments/1217788659160580108/1449580675832221726/image.png?ex=693f6ab5&is=693e1935&hm=1352e3126ed4d662b96d4e5ea8ee79a36607a3bd3b0fbafab1676efce23b8f67&)
+   ![Screenshot Books](https://files.catbox.moe/q2l45e.png)
 
 ---
 
